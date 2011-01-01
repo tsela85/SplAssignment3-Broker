@@ -183,6 +183,6 @@ public class Broker implements Listener {
 
 	public double getCash() {
 		return _cash;
-	}
+	}	
 
 }
