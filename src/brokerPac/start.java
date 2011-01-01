@@ -22,7 +22,7 @@ public class start {
 	 * @throws NumberFormatException 
 	 */
 	public static void main(String[] args) throws NumberFormatException, FileNotFoundException, LoginException, IOException {
-		Broker broker1=new Broker(args[0],args[1],Integer.parseInt(args[3]));;
+		Broker broker1=new Broker(args[0],args[1],Integer.parseInt(args[2]));;
 		broker1.connectToStockExcange();
 	}
 
