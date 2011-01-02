@@ -3,8 +3,6 @@
  */
 package brokerPac;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -53,5 +51,10 @@ public class TradingClient {
 	 */
 	public Vector<StockOrder> getSellOrders() {
 		return _sellOrders;
+	}
+	
+	public void clearOrders() {
+		_buyOrders.clear();
+		_sellOrders.clear();
 	}
 }
