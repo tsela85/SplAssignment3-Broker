@@ -175,6 +175,8 @@ public class Broker implements Listener {
 	private void newDay(int day) {
 		_numClosedCliends=0;
 		_day=day;
+		if (_clients.size() == 0) 
+			brokerCloseDay();
 	}
 
 	private void clientDisconnected(String clientName) {
