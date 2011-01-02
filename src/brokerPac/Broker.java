@@ -58,7 +58,7 @@ public class Broker implements Listener {
 		_brokerStompClient.subscribe("/topic/bConnected", this);   				
 		_brokerStompClient.subscribe("/topic/cConnected", this);
 		_brokerStompClient.subscribe("/topic/bConnected", this);
-		_brokerStompClient.subscribe("/topic/cDisconnected", this);
+		_brokerStompClient.subscribe("/topic/cDisconnect", this);
 		_brokerStompClient.subscribe("/topic/bOrders-"+_name, this);
 		_brokerStompClient.subscribe("/topic/bDeals-"+_name, this);
 		_brokerStompClient.subscribe("/topic/Calendar", this);
