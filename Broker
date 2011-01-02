@@ -1,0 +1,2 @@
+#! /bin/sh
+java -jar Broker.jar $1 $2 $3

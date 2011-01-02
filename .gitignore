@@ -1,0 +1,5 @@
+*.class
+*.ini
+*.xml
+*.log
+*jar*
