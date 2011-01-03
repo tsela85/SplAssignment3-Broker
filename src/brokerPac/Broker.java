@@ -56,7 +56,12 @@ public class Broker implements Listener {
 		_brokerStompClient.send("/topic/bConnect","connect "+ _name +"\n");
 		//listen to the StockExcange connection acknowledge
 		_brokerStompClient.subscribe("/topic/bConnected", this);   				
-
+		_brokerStompClient.subscribe("/topic/cConnected", this);
+		_brokerStompClient.subscribe("/topic/bConnected", this);
+		_brokerStompClient.subscribe("/topic/cDisconnect", this);
+		_brokerStompClient.subscribe("/topic/bOrders-"+_name, this);
+		_brokerStompClient.subscribe("/topic/bDeals-"+_name, this);
+		_brokerStompClient.subscribe("/topic/Calendar", this);
 	}
 
 	/* (non-Javadoc)
@@ -129,12 +134,12 @@ public class Broker implements Listener {
 	}
 
 	public void connectedToStockExcange() {
-		_brokerStompClient.subscribe("/topic/cConnected", this);
-		_brokerStompClient.subscribe("/topic/bConnected", this);
-		_brokerStompClient.subscribe("/topic/cDisconnected", this);
-		_brokerStompClient.subscribe("/topic/bOrders-"+_name, this);
-		_brokerStompClient.subscribe("/topic/bDeals-"+_name, this);
-		_brokerStompClient.subscribe("/topic/Calendar", this);
+//		_brokerStompClient.subscribe("/topic/cConnected", this);
+//		_brokerStompClient.subscribe("/topic/bConnected", this);
+//		_brokerStompClient.subscribe("/topic/cDisconnected", this);
+//		_brokerStompClient.subscribe("/topic/bOrders-"+_name, this);
+//		_brokerStompClient.subscribe("/topic/bDeals-"+_name, this);
+//		_brokerStompClient.subscribe("/topic/Calendar", this);
 		_connected=true;
 	}
 
@@ -150,7 +155,9 @@ public class Broker implements Listener {
 				_brokerStompClient.send("/topic/Orders",order.toString()+"\n");
 			for(StockOrder order : client.getSellOrders())
 				_brokerStompClient.send("/topic/Orders",order.toString()+"\n");
+			client.clearOrders();
 		}
+		_numClosedCliends=0;
 		_brokerStompClient.send("/topic/Orders", "closeDay "+_name+" "+_day +"\n");		
 	}
 
@@ -168,6 +175,8 @@ public class Broker implements Listener {
 	private void newDay(int day) {
 		_numClosedCliends=0;
 		_day=day;
+		if (_clients.size() == 0) 
+			brokerCloseDay();
 	}
 
 	private void clientDisconnected(String clientName) {
@@ -179,10 +188,11 @@ public class Broker implements Listener {
 	private void clientConnected(String clientName) {
 		if (_clients.size() < N) 
 			_clients.put(clientName, new TradingClient());
+	//	System.out.print("Broker 184:  client connected "+clientName);
 	}
 
 	public double getCash() {
 		return _cash;
-	}	
-
+	}
+	
 }
